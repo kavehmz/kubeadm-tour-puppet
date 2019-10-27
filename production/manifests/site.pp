@@ -7,7 +7,7 @@ user { 'mitchell':
   managehome => true,
 }
 
-group { 'absent':
-  ensure => 'present',
+group { 'mitchell':
+  ensure => 'absent',
   gid    => '1000',
 }
