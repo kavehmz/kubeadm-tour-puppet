@@ -8,6 +8,6 @@ user { 'mitchell':
 }
 
 group { 'mitchell':
-  ensure => 'absent',
+  ensure => 'present',
   gid    => '1000',
 }
