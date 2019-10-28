@@ -25,8 +25,21 @@ node default {
     path => '/usr/sbin/ebtables-legacy',
   }
 
-  include 'docker'
+  file { '/etc/docker/daemon.json':
+    ensure  => present,
+    content => '
+      {
+        "exec-opts": ["native.cgroupdriver=systemd"],
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "100m"
+        },
+        "storage-driver": "overlay2"
+      }
+    ',
+  }
 
+  include 'docker'
 
   package { 'apt-transport-https':
     ensure => installed,
