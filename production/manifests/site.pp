@@ -59,3 +59,10 @@ node default {
   exec { '/usr/bin/systemctl daemon-reload': }
   exec { '/usr/bin/systemctl restart kubelet': }
 }
+
+if lookup('myrole') !='k8s-server' {
+  unless '/usr/bin/test -f /opt/kubeadmin.txt' {
+    exec { '/usr/bin/kubeadm init --pod-network-cidr=192.168.0.0/16 > /opt/kubeadmin.txt': }
+    exec { '/usr/bin/kubectl apply -f https://docs.projectcalico.org/v3.10/manifests/calico.yaml':}
+  }
+}
